@@ -9,6 +9,7 @@
     "object-literal-sort-keys": false,
     "member-access": false,
     "no-console": false,
+    "variable-name": false,
     "no-implicit-dependencies": [ true, "dev" ],
     "max-classes-per-file": [
       false
