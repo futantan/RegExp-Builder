@@ -23,4 +23,8 @@ describe('RegexBuilder', () => {
     expect(new RegexBuilder().optional('a').build()).toBe('a?');
     expect(new RegexBuilder().optional('abc').build()).toBe('(abc)?');
   });
+
+  it('anyOf', () => {
+    expect(new RegexBuilder().anyOf(['a', 'b', 'c']).build()).toBe('(a|b|c)');
+  })
 });

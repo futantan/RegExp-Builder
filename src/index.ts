@@ -3,6 +3,13 @@ export class RegexBuilder {
   private _matchEnd: boolean = false;
   private _regStr: string = '';
 
+  // // flags
+  // private _globalSearch: boolean = false;    // g
+  // private _caseInsensitive: boolean = false; // i
+  // private _multiLineSearch: boolean = false; // m
+  // private _unicode: boolean = false;         // u
+  // private _sticky: boolean = false;          // y
+
   matchBegin = () => { this._matchBegin = true; return this; };
   matchEnd = () => { this._matchEnd = true; return this; };
 
@@ -18,6 +25,11 @@ export class RegexBuilder {
 
   optional = (expression: string) => {
     this._regStr += `${this._addParenthesesIfNeed(expression)}?`;
+    return this;
+  }
+
+  anyOf = (choices: string[]) => {
+    this._regStr += `(${choices.join('|')})`;
     return this;
   }
 
