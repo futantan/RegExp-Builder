@@ -26,5 +26,49 @@ describe('RegexBuilder', () => {
 
   it('anyOf', () => {
     expect(new RegexBuilder().anyOf(['a', 'b', 'c']).build()).toBe('(a|b|c)');
-  })
+  });
+
+  it('anySingleCharacter', () => {
+    expect(new RegexBuilder().anySingleCharacter().build()).toBe('.');
+  });
+
+  it('formfeed', () => {
+    expect(new RegexBuilder().formfeed().build()).toBe('\\f');
+  });
+
+  it('newline', () => {
+    expect(new RegexBuilder().newline().build()).toBe('\\n');
+  });
+
+  it('carriageReturn', () => {
+    expect(new RegexBuilder().carriageReturn().build()).toBe('\\r');
+  });
+
+  it('tab', () => {
+    expect(new RegexBuilder().tab().build()).toBe('\\t');
+  });
+
+  it('anyDigit', () => {
+    expect(new RegexBuilder().anyDigit().build()).toBe('\\d');
+  });
+
+  it('anyNonDigit', () => {
+    expect(new RegexBuilder().anyNonDigit().build()).toBe('\\D');
+  });
+
+  it('whitespace', () => {
+    expect(new RegexBuilder().whitespace().build()).toBe('\\s');
+  });
+
+  it('notAWhitespace', () => {
+    expect(new RegexBuilder().notAWhitespace().build()).toBe('\\S');
+  });
+
+  it('anyWordCharacter', () => {
+    expect(new RegexBuilder().anyWordCharacter().build()).toBe('\\w');
+  });
+
+  it('anyNonWordCharacter', () => {
+    expect(new RegexBuilder().anyNonWordCharacter().build()).toBe('\\W');
+  });
 });
