@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
-    "test": "jest --config jest.config.json",
+    "test": "jest --config jest.config.json && codecov",
     "test:watch": "jest --watch --config jest.config.json",
     "lint": "tslint -c tslint.json --project tsconfig.json",
     "lint:fix": "tslint -c tslint.json --project tsconfig.json --fix"
@@ -26,6 +26,7 @@
   "dependencies": {},
   "devDependencies": {
     "@types/jest": "^21.1.6",
+    "codecov": "^3.0.0",
     "jest": "^21.2.1",
     "ts-jest": "^21.2.2",
     "tslint": "^5.8.0",
