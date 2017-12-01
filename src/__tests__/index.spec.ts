@@ -11,21 +11,33 @@ describe('RegexBuilder', () => {
 
   it('zeroOrMoreOf', () => {
     expect(new RegexBuilder().zeroOrMoreOf('a').build()).toBe('a*');
-    expect(new RegexBuilder().zeroOrMoreOf('abc').build()).toBe('(abc)*');
+    expect(new RegexBuilder().zeroOrMoreOf('abc').build()).toBe('(?:abc)*');
   });
 
   it('oneOrMoreOf', () => {
     expect(new RegexBuilder().oneOrMoreOf('a').build()).toBe('a+');
-    expect(new RegexBuilder().oneOrMoreOf('abc').build()).toBe('(abc)+');
+    expect(new RegexBuilder().oneOrMoreOf('abc').build()).toBe('(?:abc)+');
   });
 
   it('optional', () => {
     expect(new RegexBuilder().optional('a').build()).toBe('a?');
-    expect(new RegexBuilder().optional('abc').build()).toBe('(abc)?');
+    expect(new RegexBuilder().optional('abc').build()).toBe('(?:abc)?');
   });
 
   it('anyOf', () => {
     expect(new RegexBuilder().anyOf(['a', 'b', 'c']).build()).toBe('(a|b|c)');
+  });
+
+  it('nTimesOf', () => {
+    expect(new RegexBuilder().nTimesOf('hello', 3).build()).toBe('hello{3}');
+  });
+
+  it('moreThanNTimesOf', () => {
+    expect(new RegexBuilder().moreThanNTimesOf('hello', 3).build()).toBe('hello{3,}');
+  });
+
+  it('expressionTimesBetween', () => {
+    expect(new RegexBuilder().expressionTimesBetween('hello', 3, 6).build()).toBe('hello{3,6}');
   });
 
   it('anySingleCharacter', () => {
@@ -71,4 +83,29 @@ describe('RegexBuilder', () => {
   it('anyNonWordCharacter', () => {
     expect(new RegexBuilder().anyNonWordCharacter().build()).toBe('\\W');
   });
+
+  it('capture', () => {
+    expect(new RegexBuilder().capture('hello').build()).toBe('(hello)');
+  });
+
+  it('nonCapture', () => {
+    expect(new RegexBuilder().nonCapture('hello').build()).toBe('(?:hello)');
+  });
+
+  it('positiveLookahead', () => {
+    expect(new RegexBuilder().positiveLookahead('hello').build()).toBe('(?=hello)');
+  });
+
+  it('negativeLookahead', () => {
+    expect(new RegexBuilder().negativeLookahead('hello').build()).toBe('(?!hello)');
+  });
+
+  it('aSingleCharacterInString', () => {
+    expect(new RegexBuilder().aSingleCharacterInString('hello').build()).toBe('[hello]');
+  });
+
+  it('anySingleCharacterExcept', () => {
+    expect(new RegexBuilder().anySingleCharacterExcept('abc').build()).toBe('[^abc]');
+  })
+
 });
