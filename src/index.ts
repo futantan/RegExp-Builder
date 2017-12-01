@@ -10,12 +10,20 @@ export class RegexBuilder {
   private _matchEnd: boolean = false;
   private _regStr: string = '';
 
-  // // flags
-  // private _globalSearch: boolean = false;    // g
-  // private _caseInsensitive: boolean = false; // i
-  // private _multiLineSearch: boolean = false; // m
-  // private _unicode: boolean = false;         // u
-  // private _sticky: boolean = false;          // y
+  // ==================================== FLAGS ====================================
+  private _flags: { [index: string]: any } = {
+    globalSearch: { value: false, flag: 'g' },
+    caseInsensitive: { value: false, flag: 'i' },
+    multiLineSearch: { value: false, flag: 'm' },
+    unicode: { value: false, flag: 'u' },
+    sticky: { value: false, flag: 'y' },
+  };
+
+  globalSearch = () => { this._flags.globalSearch.value = true; };
+  caseInsensitive = () => { this._flags.caseInsensitive.value = true; };
+  multiLineSearch = () => { this._flags.multiLineSearch.value = true; };
+  unicode = () => { this._flags.unicode.value = true; };
+  sticky = () => { this._flags.sticky.value = true; };
 
   /**
    * All characters are treated literally except for the control characters
@@ -85,7 +93,7 @@ export class RegexBuilder {
    *
    * The regex: `.`
    */
-  anySingleCharacter = () => { this._regStr += '.'; return this; }
+  anySingleCharacter = () => { this._regStr += '.'; return this; };
 
   // ==================================== ESCAPE ====================================
 
@@ -221,9 +229,35 @@ export class RegexBuilder {
   // TODO: [a - z] [a-zA-Z] [0-9]
 
   build = () => {
-    if (this._matchBegin) { this._regStr = '^' + this._regStr; }
-    if (this._matchEnd) { this._regStr = this._regStr + '$'; }
-    return this._regStr;
+    return new RegExp(
+      this._generateRegexpCoreStr(),
+      this._allFlags(),
+    );
+  }
+
+  debug = () => {
+    console.log(this.toString());
+    return this;
+  }
+
+  toString = () => {
+    return `/${this._generateRegexpCoreStr()}/${this._allFlags()}`;
+  }
+
+  private _generateRegexpCoreStr = () => {
+    let result = '';
+    if (this._matchBegin) { result += '^'; }
+    result += this._regStr;
+    if (this._matchEnd) { result += '$'; }
+    return result;
+  }
+
+  private _allFlags = () => {
+    let result = '';
+    for (const key in this._flags) {
+      if (this._flags[key].value) { result += this._flags[key].flag; }
+    }
+    return result;
   }
 
   private _addParenthesesIfNeed = (expression: string): string => {
